@@ -13,7 +13,6 @@ import {
   CheckCircle2,
   Lock,
   KeyRound,
-  Shield,
   ShieldCheck,
   Bell,
   Download,
@@ -24,7 +23,6 @@ import {
   LogOut,
   Mail,
   AlertTriangle,
-  FileText,
   RefreshCw,
   ExternalLink
 } from 'lucide-react';
@@ -37,7 +35,6 @@ import {
 } from '../types';
 import {
   DEFAULT_ACTIVE_SESSIONS,
-  DEFAULT_NOTIFICATION_PREFERENCES,
   getStoredOrders
 } from '../data/auth';
 

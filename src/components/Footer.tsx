@@ -165,6 +165,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           }}
         >
           <p>© {new Date().getFullYear()} wallflower. All rights reserved.</p>
+          <a
+            href="#admin"
+            style={{
+              color: '#525252',
+              fontSize: '0.8rem',
+              textDecoration: 'none',
+              transition: 'color 0.15s ease'
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#FFFFFF'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = '#525252'; }}
+            title="Administrator Portal"
+          >
+            Admin Panel
+          </a>
         </div>
       </div>
     </footer>

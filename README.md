@@ -1,125 +1,117 @@
-# WALLFLOWER — Art Prints & Posters
+# Wallflower — Full-Stack Architecture (Frontend & Backend)
 
-A complete, visually polished, premium e-commerce website for the poster and wall-art brand **WALLFLOWER**.
-
-Built strictly in accordance with the **WALLFLOWER Development Specification Version 1.0**.
-
----
-
-## 🎨 Design Philosophy & Visual Identity
-
-- **Minimalist & Editorial:** Designed like an independent art and design gallery. The interface acts as a quiet canvas that complements the artwork.
-- **White-Themed Color Palette:**
-  - `Pure White (#FFFFFF)`: Primary website background
-  - `Off White (#FAFAFA)`: Secondary backgrounds and subtle sections
-  - `Light Gray (#F2F2F2)`: Secondary interface elements & subtle containers
-  - `Medium Gray (#888888)`: Secondary text & subtle descriptors
-  - `Dark Gray (#333333)`: Supporting text & descriptions
-  - `Near Black (#171717)`: Primary headings, buttons, and important text
-  - `Blue (#2677E8)`: Exclusively used for highlighting the selected poster size and active interactive states
-- **Typography:** Modern, crisp sans-serif (*Plus Jakarta Sans*) with proportional line-heights and high legibility.
+This project has been separated into two dedicated applications:
+1. `backend/` — Node.js / Express REST API Server
+2. `frontend/` — React + TypeScript + Vite Single Page Application (Storefront + Admin Panel)
 
 ---
 
-## ✨ Features & Specification Compliance
+## 📁 Project Structure
 
-### 1. Navigation & Header
-- **Brand Logo:** `wallflower.` in clean lowercase lettering on the left. Click redirects to home/catalog.
-- **Catalog Navigation:** Directly navigates to the responsive product grid.
-- **Collection Dropdown:** Clean white dropdown with subtle shadow and border. Displays two distinct, independently clickable options:
-  1. *Option 1: Create Your Own Collection* (Studio wall art builder preview)
-  2. *Option 2: Collections by Wallflower* (Curated trios and duo suites with bundle pricing)
-  Closes smoothly on outside click or option selection.
-- **Shopping Bag / Cart Icon:** Positioned separately with dynamic item counter badge. Opens the slide-over cart drawer.
-
-### 2. Catalogue Grid
-- **Responsive Layout:**
-  - Desktop: 4 columns
-  - Tablets: 2–3 columns
-  - Mobile: 2 columns with aspect-ratio preservation
-- **Product Cards:**
-  - Aspect ratio preserved poster frame (standard 3:4 portrait ratio)
-  - Product name and starting price underneath
-  - Subtle hover lift effect (`transform: translateY(-4px)`)
-  - Entire card is clickable to open the dedicated Product Detail Page
-
-### 3. Dedicated Individual Product Detail Page
-- **Mandatory Two-Column Desktop Layout:**
-  - **LEFT COLUMN:** Large poster image presentation, centered with generous whitespace, crisp framing, and zero distortion.
-  - **RIGHT COLUMN:** Product name, subtitle, curated description, dynamic price, size selection, quantity selector, and purchasing buttons.
-- **Poster Size Selection (A3, A4, A5):**
-  - All three options visible simultaneously as small rounded rectangular boxes.
-  - **A4 is selected by default.**
-  - Selected state: highlighted in **Blue (`#2677E8`)** with bold white text.
-  - Unselected state: white background with subtle gray border.
-  - Switching updates price instantly without page reload and preserves state for the cart.
-- **Quantity Selector:**
-  - Horizontal layout: `[-]` `[qty]` `[+]`
-  - Default quantity: **1**.
-  - Minimum allowed quantity: **1** (cannot become 0 or negative).
-  - When quantity is **1**: Minus button is faded, light gray, and disabled.
-  - When quantity is **> 1**: Minus button activates with near-black color.
-- **Add to Cart Button:**
-  - Full-width near-black button (`#171717`) with white text and rounded corners.
-  - Captures Product ID, name, image, selected size, quantity, and unit price.
-  - Merges duplicate items with the same size consistently.
-  - Clear visual feedback: changes to **"Added to Cart ✓"** for 2 seconds.
-- **Buy Now Button:**
-  - White background, dark text, thin dark border, and subtle hover.
-  - Connects directly to the express purchase-flow entry point with current product, size, and quantity.
-
-### 4. Shopping Bag Drawer & Purchase Flow
-- Slide-over drawer displaying line items, sizes, quantities, and subtotal.
-- Express Purchase Flow Entry Point modal allowing end-to-end checkout simulation with simulated order confirmation.
-- URL hash history synchronization (`#catalog`, `#product/:id`, `#collection/custom`, `#collection/curated`) supporting browser back/forward buttons and direct linking.
-
----
-
-## 🚀 Running the Project
-
-```bash
-# 1. Navigate to the project directory
-cd "C:\Users\dhruv\.gemini\antigravity\scratch\wallflower"
-
-# 2. Run the development server
-npm run dev
-
-# 3. Or build for production
-npm run build
-npm run preview
 ```
-
-The live preview is running at **http://localhost:4173/**.
-
----
-
-## 📁 File Structure
-
-```text
-wallflower/
-├── dist/                     # Optimized production build
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── Navbar.tsx         # Brand logo, Catalog, Collection dropdown, Cart trigger
-│   │   ├── CatalogGrid.tsx    # 4-col responsive poster grid with category filters
-│   │   ├── ProductCard.tsx    # Aspect-ratio preserved card with hover transitions
-│   │   ├── ProductDetail.tsx  # Side-by-side desktop layout, size & qty selectors
-│   │   ├── CartDrawer.tsx     # Slide-over bag with quantity adjust & line-item totals
-│   │   ├── CollectionsView.tsx# Custom gallery builder & curated suites
-│   │   ├── CheckoutDrawer.tsx # Express purchase-flow entry point & confirmation
-│   │   └── Footer.tsx         # Archival print specs & brand story
+Wallflower-main/
+├── backend/
+│   ├── package.json               # Backend dependencies (express, cors)
 │   ├── data/
-│   │   └── posters.ts         # 12 museum-grade poster products with independent A3/A4/A5 pricing
-│   ├── styles/
-│   │   └── index.css          # Specification palette tokens, typography & animations
-│   ├── utils/
-│   │   └── posterArt.ts       # Procedural SVG vector poster artwork generator
-│   ├── types.ts               # TypeScript interfaces for Posters, Sizes, Cart & Navigation
-│   ├── App.tsx                # Application root with hash routing & cart state
-│   └── main.tsx               # React 18 DOM entry point
-├── index.html                 # Modern typography & viewport setup
-├── package.json               # Dependencies (React 18, Lucide React, Vite, TypeScript)
-├── tsconfig.json              # TypeScript compiler configuration
-└── vite.config.ts             # Vite build configuration
+│   │   └── store.json             # Persistent JSON database (auto-seeded)
+│   └── src/
+│       ├── server.js              # Express server entry point (port 5000)
+│       ├── db.js                  # Persistent database manager & audit logger
+│       └── routes/
+│           ├── auth.routes.js     # Admin authentication & session verification
+│           ├── orders.routes.js   # Order lifecycle (Pending ➔ Completed Qikink)
+│           ├── products.routes.js # Poster CRUD, multiple images & archiving
+│           ├── collections.routes.js # Curated collections management
+│           ├── customers.routes.js   # Registered customer accounts & LTV
+│           ├── discounts.routes.js   # Coupons and promotions
+│           ├── reviews.routes.js     # Moderation and customer feedback
+│           └── analytics.routes.js   # Revenue, profit, sizes & bestsellers
+│
+├── frontend/
+│   ├── package.json               # Frontend dependencies (React 18, lucide-react)
+│   ├── vite.config.ts             # Vite configuration with /api reverse proxy
+│   ├── tsconfig.json              # TypeScript configuration
+│   ├── index.html                 # HTML entry point
+│   ├── public/                    # Static assets & icons
+│   └── src/
+│       ├── main.tsx               # App router (Storefront vs #admin)
+│       ├── App.tsx                # Customer storefront root
+│       ├── components/            # Customer-facing components
+│       ├── data/                  # Customer data models
+│       ├── styles/                # Storefront CSS
+│       └── admin/                 # Wallflower Admin Panel
+│           ├── AdminApp.tsx       # Admin panel shell & sub-router
+│           ├── AdminLogin.tsx     # Admin sign-in screen
+│           ├── admin.css          # Admin panel styling
+│           ├── types/             # Admin data types
+│           ├── data/              # Admin data access services
+│           └── components/        # Admin UI modules (11 full sections)
+│
+└── package.json                   # Root runner scripts
 ```
+
+---
+
+## 🚀 How to Run the Applications
+
+### Option A: Run Both Together from Root
+```bash
+npm run dev
+```
+
+### Option B: Run Separately
+```bash
+# Terminal 1: Backend Server (Port 5000)
+cd backend
+npm start
+# or: npm run dev (with hot-reload)
+
+# Terminal 2: Frontend App (Port 5173)
+cd frontend
+npm run dev
+```
+
+Frontend will be accessible at: `http://localhost:5173/`  
+Admin Panel will be accessible at: `http://localhost:5173/#admin`  
+Backend API will be accessible at: `http://localhost:5000/api/health`
+
+---
+
+## 🔑 Default Administrator Credentials
+* **Username**: `admin`
+* **Password**: `wallflower@admin123`
+*(Can be changed in Admin Settings ➔ Security)*
+
+---
+
+## 📡 REST API Reference
+
+| Route | Method | Description |
+|---|---|---|
+| `/api/health` | GET | Server health check |
+| `/api/admin/login` | POST | Authenticate admin & generate session |
+| `/api/admin/me` | GET | Retrieve authenticated admin profile |
+| `/api/admin/change-password` | POST | Change administrator password |
+| `/api/admin/logs` | GET | Retrieve admin activity audit logs |
+| `/api/orders` | GET / POST | Query orders with filters / Place order |
+| `/api/orders/pending` | GET | Orders awaiting administrator Qikink submission |
+| `/api/orders/completed` | GET | Orders successfully confirmed & submitted to Qikink |
+| `/api/orders/:id/confirm` | PATCH | Confirm order submission to Qikink |
+| `/api/orders/:id/shipping` | PATCH | Update courier, tracking ID & delivery status |
+| `/api/orders/:id/cancel` | PATCH | Cancel order with reason |
+| `/api/products` | GET / POST | List products / Add new poster design |
+| `/api/products/:id` | GET / PUT / DELETE | Poster design details / Update / Delete |
+| `/api/products/:id/archive` | PATCH | Archive poster design |
+| `/api/products/:id/duplicate` | POST | Duplicate poster design |
+| `/api/collections` | GET / POST | List collections / Create collection |
+| `/api/collections/:id` | PUT / DELETE | Update / Delete collection |
+| `/api/collections/reorder` | PATCH | Reorder collection display priority |
+| `/api/customers` | GET | List registered customers with total spent & orders |
+| `/api/discounts` | GET / POST | Promo codes list / Create promo code |
+| `/api/discounts/:id/toggle` | PATCH | Enable or disable promo code |
+| `/api/reviews` | GET / POST | List reviews / Submit customer review |
+| `/api/reviews/:id/status` | PATCH | Approve or hide review |
+| `/api/analytics/dashboard` | GET | Live visitors, revenue, profit, today's sales |
+| `/api/analytics/sales` | GET | Time-series sales & profit (day/week/month/year) |
+| `/api/analytics/bestsellers` | GET | Top 10 bestselling posters |
+| `/api/analytics/sizes` | GET | Poster size breakdown (A3, A4, A5) |
